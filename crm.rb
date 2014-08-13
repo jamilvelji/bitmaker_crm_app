@@ -62,6 +62,22 @@ class CRM
     options_menu
   end
 
+  def modift_crm_contact
+
+  end
+
+  def delete_crm_contact
+
+  end
+
+  def display_crm_contacts
+
+  end
+
+  def display_attribute
+    
+  end
+
 end
 
 class Contact
