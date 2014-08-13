@@ -12,10 +12,11 @@ class CRM
     puts "[4] Display all the contacts"
     puts "[5] Display an attribute"
     puts "[6] Exit"
-    puts "Enter a number: "
+    print "\nEnter a number: "
   end
 
   def options_menu
+    puts "--- Welcome to the CRM #{@name} ---\n"
     print_options_menu
     user_selected_option = gets.chomp.to_i
     call_option(user_selected_option)
@@ -35,6 +36,16 @@ class CRM
       puts "Invalid option, please try again"
       options_menu
     end
+  end
+
+  def add_new_crm_contact(first_name, last_name, email, notes)
+    print "First Name: "
+    @first_name = gets.chomp
+
+    print "Last_name: "
+    @last_name = gets.chomp
+
+
   end
 
 end
