@@ -9,4 +9,8 @@ class BlackBook
     contact.id = @contact_id
     @contact_id += 1
   end
+
+  #def find(contact)
+  #def delete(contact)
+  #def modify(contact)
 end

@@ -4,6 +4,11 @@ require_relative 'blackbook'
 class CRM
   attr_reader :name
 
+  def self.run(name)
+    crm = new(name)
+    crm.options_menu
+  end
+
   def initialize(name)
     @name = name
     @blackbook = BlackBook.new
@@ -87,5 +92,6 @@ class CRM
 
 end
 
-crm = CRM.new("Jamil's CRM")
-crm.options_menu
+CRM.run("Jamil's CRM")
+
+
