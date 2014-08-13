@@ -84,29 +84,5 @@ class CRM
 
 end
 
-class Contact
-  attr_accessor :id, :first_name, :last_name, :email, :notes
-
-  def initialize(first_name, last_name, email, notes)
-    @first_name = first_name
-    @last_name = last_name
-    @email = email
-    @notes = notes
-  end
-end
-
-class BlackBook
-  def initialize
-    @contact_id = 1
-    @contacts = []
-  end
-
-  def add_contact(contact)
-    @contacts << contact
-    contact.id = @contact_id
-    @contact_id += 1
-  end
-end
-
 crm = CRM.new("Jamil's CRM")
 crm.options_menu
