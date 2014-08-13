@@ -3,6 +3,7 @@ class CRM
 
   def initialize(name)
     @name = name
+    @blackbook = BlackBook.new
   end
 
   def print_options_menu
@@ -54,8 +55,8 @@ class CRM
     print "Notes: "
     notes = gets.chomp
 
-    contact = Contact.new(first_name, last_name, email, notes)
-
+    @rolodex.add_contact(Contact.new(first_name, last_name, email, notes))
+    
     puts "Contact has been added."
     sleep(2)
 
@@ -93,6 +94,7 @@ end
 
 class BlackBook
   def initialize
+    @contact_id = 10000
     @contacts = []
   end
 end
