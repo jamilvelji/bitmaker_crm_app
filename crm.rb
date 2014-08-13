@@ -38,16 +38,39 @@ class CRM
     end
   end
 
-  def add_new_crm_contact(first_name, last_name, email, notes)
+  def add_new_crm_contact
+    puts "Please enter the new contact's information below\n"
     print "First Name: "
-    @first_name = gets.chomp
+    first_name = gets.chomp
 
-    print "Last_name: "
-    @last_name = gets.chomp
+    print "Last Name: "
+    last_name = gets.chomp
 
+    print "Email: "
+    email = gets.chomp
 
+    print "Notes: "
+    notes = gets.chomp
+
+    contact = Contact.new(first_name, last_name, email, notes)
+
+    puts "Contact has been added."
+    sleep(2)
+
+    puts "\e[H\e[2J"
+
+    options_menu
   end
 
+end
+
+class Contact
+  def initialize(first_name, last_name, email, notes)
+    @first_name = first_name
+    @last_name = last_name
+    @email = email
+    @notes = notes
+  end
 end
 
 crm = CRM.new("Jamil's CRM")
