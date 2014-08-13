@@ -31,10 +31,10 @@ class CRM
     when 4 then display_crm_contacts
     when 5 then display_attribute
     when 6
-      puts "Exiting..."
+      puts "\nExiting..."
       return
     else
-      puts "Invalid option, please try again"
+      puts "\nInvalid option, please try again"
       sleep(1)
       puts "\e[H\e[2J"
       options_menu
@@ -42,7 +42,8 @@ class CRM
   end
 
   def add_new_crm_contact
-    puts "Please enter the new contact's information below\n"
+    puts "\e[H\e[2J"
+    puts "Please enter the new contact's information below\n\n"
     print "First Name: "
     first_name = gets.chomp
 
@@ -55,9 +56,9 @@ class CRM
     print "Notes: "
     notes = gets.chomp
 
-    @rolodex.add_contact(Contact.new(first_name, last_name, email, notes))
-    
-    puts "Contact has been added."
+    @blackbook.add_contact(Contact.new(first_name, last_name, email, notes))
+
+    puts "\nContact has been added."
     sleep(2)
 
     puts "\e[H\e[2J"
@@ -84,6 +85,8 @@ class CRM
 end
 
 class Contact
+  attr_accessor :id, :first_name, :last_name, :email, :notes
+
   def initialize(first_name, last_name, email, notes)
     @first_name = first_name
     @last_name = last_name
@@ -94,8 +97,14 @@ end
 
 class BlackBook
   def initialize
-    @contact_id = 10000
+    @contact_id = 1
     @contacts = []
+  end
+
+  def add_contact(contact)
+    @contacts << contact
+    contact.id = @contact_id
+    @contact_id += 1
   end
 end
 
