@@ -34,6 +34,8 @@ class CRM
       return
     else
       puts "Invalid option, please try again"
+      sleep(1)
+      puts "\e[H\e[2J"
       options_menu
     end
   end
@@ -86,6 +88,12 @@ class Contact
     @last_name = last_name
     @email = email
     @notes = notes
+  end
+end
+
+class BlackBook
+  def initialize
+    @contacts = []
   end
 end
 
