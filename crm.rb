@@ -1,3 +1,6 @@
+require_relative 'contact'
+require_relative 'blackbook'
+
 class CRM
   attr_reader :name
 
