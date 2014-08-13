@@ -4,6 +4,7 @@ class CRM
   def initialize(name)
     @name = name
     @blackbook = BlackBook.new
+    puts "--- Welcome to the CRM #{@name} ---\n"
   end
 
   def print_options_menu
@@ -17,7 +18,6 @@ class CRM
   end
 
   def options_menu
-    puts "--- Welcome to the CRM #{@name} ---\n"
     print_options_menu
     user_selected_option = gets.chomp.to_i
     call_option(user_selected_option)
@@ -66,7 +66,7 @@ class CRM
     options_menu
   end
 
-  def modift_crm_contact
+  def modify_crm_contact
 
   end
 
