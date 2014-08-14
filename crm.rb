@@ -12,7 +12,7 @@ class CRM
   def initialize(name)
     @name = name
     @blackbook = BlackBook.new
-    puts "--- Welcome to your CRM #{@name} ---\n"
+    puts "\n\n--- Welcome to your CRM #{@name} ---\n\n"
   end
 
   def print_options_menu
@@ -30,6 +30,7 @@ class CRM
     print_options_menu
     user_selected_option = gets.chomp.to_i
     call_main_menu_option(user_selected_option)
+    reset
   end
 
   def call_main_menu_option(user_selected_option)
@@ -98,19 +99,23 @@ class CRM
     reset
     puts "Please enter the ID of the contact you would like to modify:"
     contact_id = gets.chomp.to_i
+    linespacer
     puts "What is the new first name?"
     new_first_name = gets.chomp
+    linespacer
     puts "What is the new last name?"
     new_last_name = gets.chomp
+    linespacer
     puts "What is the new email?"
     new_email = gets.chomp
+    linespacer
     puts "What are the new notes?"
     new_notes = gets.chomp
 
     replacement_contact = Contact.new(new_first_name, new_last_name, new_email, new_notes)
     @blackbook.edit_contact(contact_id, replacement_contact)
 
-    puts "\n Contact modified.\n"
+    puts "\nContact modified.\n"
     sleep(2)
 
     reset
@@ -134,6 +139,7 @@ class CRM
 
   def display_contact
     reset
+    linespacer
     puts "What is the contact ID of the contact would you like to see?"
     contact_id = gets.chomp.to_i
 
@@ -143,19 +149,19 @@ class CRM
 
   def display_attribute
     reset
-    puts "What is the ID of the contact who's attribute you like to display?"
+    puts "What is the ID of the contact who's attribute you like to display?\n\n"
     contact_id = gets.chomp.to_i
-    reset
     puts "What attribute would you like to display?"
     puts "[1] for first name"
     puts "[2] for last name"
     puts "[3] for email"
     puts "[4] for note"
-    reset
+    linespacer
     property = gets.chomp.to_i
-
+    linespacer
     @blackbook.display_attribute(property, contact_id)
     menu_return
+    reset
   end
 
   def display_crm_contacts
@@ -172,6 +178,10 @@ class CRM
 
   def reset
     puts "\e[H\e[2J"
+  end
+
+  def linespacer
+    puts ""
   end
 
   def exit
