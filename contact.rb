@@ -7,11 +7,4 @@ class Contact
     @email = email
     @notes = notes
   end
-
-  def display_contacts
-  	puts "ID: #{@id}"
-  	puts "Name: #{@first_name} #{@last_name}"
-  	puts "Email: #{@email}"
-  	puts "Notes: #{notes}"
-  end
 end

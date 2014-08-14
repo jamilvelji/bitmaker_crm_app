@@ -12,16 +12,17 @@ class CRM
   def initialize(name)
     @name = name
     @blackbook = BlackBook.new
-    puts "--- Welcome to the CRM #{@name} ---\n"
+    puts "--- Welcome to your CRM #{@name} ---\n"
   end
 
   def print_options_menu
     puts "[1] Add a new contact"
     puts "[2] Modify an existing contact"
-    puts "[3] Search for a contact"
-    puts "[4] Display all contacts"
-    puts "[5] Delete a contact"
-    puts "[6] Exit"
+    puts "[3] Display all the contacts"
+    puts "[4] Delete a contact"
+    puts "[5] Display a contact"
+    puts "[6] Display an attribute"
+    puts "[7] Exit"
     print "\nEnter a number: "
   end
 
@@ -35,10 +36,11 @@ class CRM
     case user_selected_option
     when 1 then add_new_crm_contact
     when 2 then modify_crm_contact
-    when 3 then search_crm_contact
-    when 4 then display_crm_contacts
-    when 5 then delete_crm_contact
-    when 6
+    when 3 then display_crm_contacts
+    when 4 then delete_crm_contact
+    when 5 then display_contact
+    when 6 then display_attribute
+    when 7
       puts "\nExiting..."
       sleep(1)
       exit
@@ -82,7 +84,7 @@ class CRM
       notes = gets.chomp
     end
 
-    @blackbook.add_contact(Contact.new(first_name, last_name, email, notes))
+    new_contact = @blackbook.add_contact(Contact.new(first_name, last_name, email, notes))
 
     puts "\nContact has been added."
     sleep(2)
@@ -95,13 +97,19 @@ class CRM
   def modify_crm_contact
     reset
     puts "Please enter the ID of the contact you would like to modify:"
-    id = select_contact_id(selected_id)
-    display_contact(id)
-    puts "What attribute would you like to modify?"
-    attribute = attribute_select
-    puts "What would you like to change this to?"
-    modified_value = gets.chomp
-    BlackBook.modify_contact(id, attribute, modified_value)
+    contact_id = gets.chomp.to_i
+    puts "What is the new first name?"
+    new_first_name = gets.chomp
+    puts "What is the new last name?"
+    new_last_name = gets.chomp
+    puts "What is the new email?"
+    new_email = gets.chomp
+    puts "What are the new notes?"
+    new_notes = gets.chomp
+
+    replacement_contact = Contact.new(new_first_name, new_last_name, new_email, new_notes)
+    @blackbook.edit_contact(contact_id, replacement_contact)
+
     puts "\n Contact modified.\n"
     sleep(2)
 
@@ -110,28 +118,12 @@ class CRM
     options_menu
   end
 
-  def search_crm_contact
-    puts "Which attribute would you like to search by?"
-    choice = attribute_select
-    puts "What are you searching for?"
-    search = gets.chomp
-    BlackBook.search(choice, search)
-    menu_return
-  end
-
-  def display_contact(id)
-    BlackBook.display_particular_contact(id)
-  end
-
-  def display_crm_contacts
-    BlackBook.display_all_contacts
-    menu_return
-  end
-
   def delete_crm_contact
+    reset
     puts "Please enter the ID of the contact you would like to delete?"
-    id = select_contact_id(selected_id)
-    BlackBook.delete_contact(id)
+    contact_id = gets.chomp.to_i
+
+    @blackbook.delete_contact(contact_id)
     puts "Contact has been deleted."
     sleep(2)
 
@@ -140,44 +132,40 @@ class CRM
     options_menu
   end
 
-  def display_contacts
-    BlackBook.display_all_contacts
+  def display_contact
+    reset
+    puts "What is the contact ID of the contact would you like to see?"
+    contact_id = gets.chomp.to_i
+
+    @blackbook.display_contact(contact_id)
+    menu_return
   end
 
-  def select_contact_id(message)
-    display_contacts
-    puts "#{message}"
-    id = gets.to_i
-    if BlackBook.contact(id).nil?
-      while contact(id).nil?
-        reset
-        puts "That isn't a contact, please try again."
-        display_contacts
-        id = gets.to_i
-      end
-    end
-    return id
+  def display_attribute
+    reset
+    puts "What is the ID of the contact who's attribute you like to display?"
+    contact_id = gets.chomp.to_i
+    reset
+    puts "What attribute would you like to display?"
+    puts "[1] for first name"
+    puts "[2] for last name"
+    puts "[3] for email"
+    puts "[4] for note"
+    reset
+    property = gets.chomp.to_i
+
+    @blackbook.display_attribute(property, contact_id)
+    menu_return
   end
 
-  def attribute_select
-    puts "[1] First name"
-    puts "[2] Last name"
-    puts "[3] Email"
-    puts "[4] Note"
-    print "Please enter a number: "
-    choice = gets.to_i
-    if choice <= 4
-      choice
-    else
-      puts "Invalid option, please try again"
-      gets
-      reset
-      attribute_select
-    end
+  def display_crm_contacts
+    reset
+    @blackbook.display_all_contacts
+    menu_return
   end
 
   def menu_return
-    puts "Press any key to return to the main menu"
+    puts "\nPress enter to return to the main menu\n"
     gets
     options_menu
   end
@@ -193,14 +181,6 @@ class CRM
     response == "y" ? return : options_menu
   end
 
-  def nil_check(result)
-    if result.nil?
-      puts "I can't find that."
-    else
-      result
-    end
-  end
-
 end
 
-CRM.run("Jamil's CRM")
+CRM.run("Jamil")
