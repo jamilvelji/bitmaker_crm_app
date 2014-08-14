@@ -31,7 +31,8 @@ class BlackBook
     if !contact_index
       puts "ID Not Found"
     else
-      @contacts[contact_index].delete
+      #@contacts[contact_index].delete
+      @contacts.delete(@contacts[contact_index])
     end
   end
 
